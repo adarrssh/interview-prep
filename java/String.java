@@ -6,3 +6,5 @@ deleteCharAt();
 word.compareTo(ans) < 0
 //Character.isLetterOrDigit(c1)
 Character.isLetterOrDigit(c1)
+
+string.substring(starting,ending);
