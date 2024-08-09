@@ -51,3 +51,7 @@ Easy to use: The ArrayList provides a simple API for list operations.
 Disadvantages of ArrayList
 Performance on insertion/deletion: Inserting or deleting elements, especially in the middle of the list, can be slow because it may involve shifting elements.
 Memory usage: ArrayList may consume more memory than a regular array because it maintains extra capacity to allow for growth.
+
+// converts res to 2d array
+List<int[]> res = new ArrayList<>();
+res.toArray(new int[res.size()][]);
