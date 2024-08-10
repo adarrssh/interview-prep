@@ -43,3 +43,5 @@ function optimized(n){
     
 }
 
+
+// TC - O(nloglogn)

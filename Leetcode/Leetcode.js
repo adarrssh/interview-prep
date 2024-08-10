@@ -45,15 +45,9 @@
 // console.log(sol.isCycle(V,adj))
 
 
-
-function a(){
-    
-    function b(){
-        
-        var x = 4;
-    }
-
-    console.log(x)
+let ans = 1 ;
+for (let i = 2 ; i<=90 ; i++){
+    ans = ans*i;
 }
 
-a()
+console.log(ans);
