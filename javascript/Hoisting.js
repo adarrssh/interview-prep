@@ -1,9 +1,14 @@
-// function x(){
-    for(var i = 1 ; i<=5; i++){
-        setTimeout(()=>{
-            console.log(i)
-        },i*1000)
-    }
+let a = 100;
 
-    console.log("Namaste Javascript")
-// }
+
+
+function a1(){
+    function b1(){
+        console.log(a)
+    }
+    return b1;
+}
+
+let res  = a1();
+
+res()
