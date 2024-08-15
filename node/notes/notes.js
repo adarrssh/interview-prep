@@ -94,6 +94,7 @@
 // Explain DNS module in Node.js
 // DNS is a node module used to do name resolution facility which is provided by the operating system as well as used to do an actual DNS lookup. Its main advantage is that there is no need for memorizing IP addresses – DNS servers provide a nifty solution for converting domain or subdomain names to IP addresses.
 
+
 // 17. What is callback hell?
 // Callback hell is an issue caused due to a nested callback. This causes the code to look like a pyramid and makes it unable to read To overcome this situation we use promises.
 
@@ -105,7 +106,106 @@
 // DNS Module: DNS Module enables us to use the underlying Operating System name resolution functionalities. The actual DNS lookup is also performed by the DNS Module. 
 // Net Module: Net Module in node.js is used for the creation of both client and server. Similar to DNS Module this module also provides an asynchronous network wrapper.
 
-// 48. How to handle environment variables in Node.js?
+// How to handle environment variables in Node.js?
 // We use process.env to handle environment variables in Node.js. We can specify environment configurations as well as keys in the .env file. To access the variable in the application, we use the “process.env.VARIABLE_NAME” syntax. To use it we have to install the dotenv package using the below command:
 
 // npm install dotenv
+
+
+// What is web socket?
+// Web Socket is a protocol that provides full-duplex (multiway) communication i.e. allows communication in both directions simultaneously. It is a modern web technology in which there is a continuous connection between the user’s browser (client) and the server. In this type of communication, between the web server and the web browser, both of them can send messages to each other at any point in time. Traditionally on the web, we had a request/response format where a user sends an HTTP request and the server responds to that. This is still applicable in most cases, especially those using RESTful API. But a need was felt for the server to also communicate with the client, without getting polled(or requested) by the client. The server in itself should be able to send information to the client or the browser. This is where Web Socket comes into the picture.
+
+
+//  What is a cluster in Node.js?
+// Due to a single thread in node.js, it handles memory more efficiently because there are no multiple threads due to which no thread management is needed. Now, to handle workload efficiently and to take advantage of computer multi-core systems, cluster modules are created that provide us the way to make child processes that run simultaneously with a single parent process.
+
+// Explain some of the cluster methods in Node.js
+// Fork(): It creates a new child process from the master. The isMaster returns true if the current process is master or else false.
+// isWorker: It returns true if the current process is a worker or else false.
+// process: It returns the child process which is global.
+// send(): It sends a message from worker to master or vice versa. 
+// kill(): It is used to kill the current worker.
+
+
+// * Worker Threads:
+//     * Worker Threads are part of the worker_threads module introduced in Node.js version 10.
+//     * Worker Threads allow you to create multiple JavaScript threads within a single Node.js process. These threads can execute JavaScript code concurrently, sharing memory and resources.
+//     * Worker Threads are ideal for CPU-bound tasks that can be parallelized, such as heavy computation or data processing.
+//     * Each worker thread operates independently with its own event loop and can execute JavaScript code in parallel with other threads.
+//     * Communication between worker threads and the main thread is achieved through a message-passing mechanism, using the postMessage() and on('message') APIs.
+//     * Unlike clusters, worker threads do not share the same server port. They are more low-level and flexible, allowing developers to implement custom threading patterns and parallel algorithms.
+
+
+
+// child processes
+// In Node.js, child processes allow you to create and manage subprocesses from within your Node.js application. This is useful for performing tasks that are resource-intensive or need to be executed independently of the main Node.js event loop. Child processes can be used to run shell commands, execute other programs, or handle parallel processing.
+
+// Key Features of Child Processes
+// Isolation: Each child process runs in its own separate environment, meaning it does not share memory with the parent process. This isolation helps in avoiding conflicts and ensures that the child process can run independently.
+
+// Concurrency: Child processes enable parallel execution of tasks, which can improve performance by leveraging multiple CPU cores or performing tasks concurrently.
+
+// Inter-process Communication: Child processes can communicate with the parent process through standard input/output (stdin, stdout, stderr), allowing for data exchange and synchronization.
+
+// Creating Child Processes in Node.js
+// Node.js provides a built-in module called child_process to handle child processes. This module offers several methods for creating and managing child processes:
+
+// 1. spawn()
+// Description: Launches a new process with a specified command and arguments. The child process can be interacted with via streams.
+// Usage: Useful for long-running processes or when you need to stream data between the parent and child processes.
+// javascript
+    const { spawn } = require('child_process');
+
+    const ls = spawn('ls', ['-lh', '/usr']);
+
+    ls.stdout.on('data', (data) => {
+      console.log(`stdout: ${data}`);
+    });
+
+    ls.stderr.on('data', (data) => {
+      console.error(`stderr: ${data}`);
+    });
+
+    ls.on('close', (code) => {
+      console.log(`child process exited with code ${code}`);
+    });
+// 2. exec()
+// Description: Executes a command in a shell and buffers the output. It is suitable for short-lived commands.
+// Usage: Useful for executing shell commands and obtaining the output in a callback.
+// javascript
+    const { exec } = require('child_process');
+
+    exec('ls -lh /usr', (error, stdout, stderr) => {
+      if (error) {
+        console.error(`exec error: ${error}`);
+        return;
+      }
+      console.log(`stdout: ${stdout}`);
+      console.error(`stderr: ${stderr}`);
+    });
+// 3. execFile()
+// Description: Similar to exec(), but directly executes a file without a shell. This method is more secure and performant when running executable files.
+// Usage: Ideal for running executables with arguments.
+    const { execFile } = require('child_process');
+
+    execFile('ls', ['-lh', '/usr'], (error, stdout, stderr) => {
+      if (error) {
+        console.error(`execFile error: ${error}`);
+        return;
+      }
+      console.log(`stdout: ${stdout}`);
+      console.error(`stderr: ${stderr}`);
+    });
+// 4. fork()
+// Description: Creates a new Node.js process and establishes a communication channel between the parent and child processes using IPC (Inter-Process Communication).
+// Usage: Useful for running Node.js scripts as child processes and communicating between them.
+
+    const { fork } = require('child_process');
+
+    const child = fork('child.js');
+
+    child.on('message', (message) => {
+      console.log(`Message from child: ${message}`);
+    });
+
+    child.send({ hello: 'world' });

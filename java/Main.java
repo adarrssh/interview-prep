@@ -2,63 +2,228 @@ import java.util.Arrays;
 import java.util.List;
 
 
-class Solution {
-    public int maxPathSum(List<Integer> arr1, List<Integer> arr2) {
-        // code here
-        int sum1 = 0;
-        int sum2 = 0;
+class Node
+    {
+        int data;
+        Node next;
+        Node(int d) {data = d; next = null; }
+    }
+
+
+class Main {
+    public static Node findUnion(Node head1, Node head2) {
+        // Add your code here.
+        Node curr1 = mergeSort(head1);
+        Node curr2 = mergeSort(head2);
         
-        int i1 = 0;
-        int n1 = arr1.size();
-        int i2 = 0;
-        int n2 = arr2.size();
+        Node tempNode = new Node(-1);
         
-        while(i1<n1 && i2 < n2){
-            if(arr1.get(i1) == arr2.get(i2)){
-                int forwardSum = findSum(i1,i2,arr1,arr2);
-                return Math.max(sum1,sum2) + forwardSum;
-            }else if(arr1.get(i1)>arr2.get(i2)){
-                i2++;
+        Node temp = tempNode;
+        int count = 0;
+        
+        while(curr1 != null && curr2 != null){
+            
+         
+            if(curr1.data <curr2.data){
+                
+                if(tempNode.next == null){
+                    temp.next = curr1;
+                    temp = temp.next;
+                    count++;
+                }else if(temp.data != curr1.data){
+                    temp.next = curr1;
+                    temp = temp.next;
+                    count++;
+                }
+            
+                System.out.println("curr1 : "+curr1.data + " temp :" + temp.data + " count: "+ count);
+                curr1 = curr1.next;
+                temp.next = null;
+
+            }else if(curr2.data < curr1.data){
+                if(tempNode.next == null){
+                    temp.next = curr2;
+                    temp = temp.next;
+                    count++;
+
+                }else if(temp.data != curr2.data){
+                    temp.next = curr2;
+                    temp = temp.next;
+                    count++;
+
+                }
+                
+                System.out.println("curr2: "+curr2.data+ " temp :" + temp.data + " count: "+ count);
+                curr2 = curr2.next;
+                temp.next = null;
+
+
             }else{
-                i1++;
+                if(tempNode.next == null){
+                    temp.next = curr1;
+                    temp = temp.next;
+                    count++;
+
+                }else if(temp.data != curr1.data){
+                    temp.next = curr1;
+                    temp = temp.next;
+                    count++;
+
+                }
+                
+                System.out.println("equal : "+curr1.data + " temp :" + temp.data + " count: "+ count);
+
+                curr1 = curr1.next;
+                curr2 = curr2.next;
+                temp.next = null;
+
             }
+
+            Node curr = tempNode.next;
+
+            
         }
         
-        return Math.max(sum1,sum2);
+        while(curr1 != null){
+            if(tempNode.next == null){
+                temp.next = curr1;
+                temp = temp.next;
+                count++;
+
+            }else if(temp.data != curr1.data){
+                temp.next = curr1;
+                temp = temp.next;
+                count++;
+
+            }
+
+            System.out.println("curr1 : "+curr1.data + " temp :" + temp.data + " count: "+ count);
+         
+
+            curr1 = curr1.next;
+                            temp.next = null;
+
+        }
+        
+        while(curr2 != null){
+            if(tempNode.next == null){
+                temp.next = curr2;
+                temp = temp.next;
+                count++;
+
+            }else if(temp.data != curr2.data){
+                temp.next = curr2;
+                temp = temp.next;
+                count++;
+
+            }
+            System.out.println("curr2: "+curr2.data+ " temp :" + temp.data + " count: "+ count);
+         
+            curr2 = curr2.next;
+                            temp.next = null;
+
+        }
+        
+        return tempNode.next;
     }
     
-    public static int findSum(int i, int j , List<Integer> arr1, List<Integer> arr2){
-        int sum1 = 0;
+    static Node mergeSort(Node node){
+        if(node == null || node.next == null) return node;
         
-        for(int p = i ; p<arr1.size();p++){
-            sum1 += arr1.get(p);
+        Node mid = findMid(node);
+        
+        Node left = node;
+        Node right = mid.next;
+         mid.next = null;
+
+        Node sortedleft = mergeSort(left);
+        Node sortedRight = mergeSort(right);
+        
+        Node newHead = merge(sortedleft,sortedRight);
+        return newHead;
+    }
+    
+    static Node merge(Node left,Node right){
+        Node tempNode = new Node(-1);
+        Node temp = tempNode;
+        
+        while(left != null && right != null){
+            if(left.data<=right.data){
+                temp.next = left;
+                left = left.next;
+            }else{
+                temp.next = right;
+                right = right.next;
+            }
+            
+            temp = temp.next;
         }
         
-        int sum2 = 0;
-        
-        for(int p = j ; p<arr2.size();p++){
-            sum2 += arr2.get(p);
+        if(left != null){
+            temp.next = left;
         }
         
-        return Math.max(sum1,sum2);
+        if(right != null){
+            temp.next = right;
+        }
+        
+        return tempNode.next;
+    }
+    
+    static Node findMid(Node head){
+        Node slow = head;
+        Node fast = head;
+        
+        while(slow != null && fast != null && fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        return slow;
     }
 
-}
+    public static void printNode(Node head){
+        Node curr = head;
+        while(curr != null){
+            System.out.print(curr.data);
+            curr = curr.next;
+        }
+    }
 
-
-public class Main {
     public static void main(String[] args) {
-        // Create sample lists
-        List<Integer> arr1 = Arrays.asList(2, 3, 7, 10, 12);
-        List<Integer> arr2 = Arrays.asList(1, 5, 7, 8);
+
+    // 3 4 9 5 2 1 8 8 9 5 9
+    // 2 5 9 9 6 4 2 6 9 3 5 3
+        Node head1 = new Node(3);
+        head1.next = new Node(4);
+        head1.next.next = new Node(9);
+        head1.next.next.next = new Node(5);
+        head1.next.next.next.next = new Node(2);
+        head1.next.next.next.next.next = new Node(1);
+        head1.next.next.next.next.next.next = new Node(8);
+        head1.next.next.next.next.next.next.next = new Node(9);
+        head1.next.next.next.next.next.next.next.next = new Node(5);
+        head1.next.next.next.next.next.next.next.next.next = new Node(9);
+
+        Node head2 = new Node(2);
+        head2.next = new Node(5);
+        head2.next.next = new Node(9);
+        head2.next.next.next = new Node(9);
+        head2.next.next.next.next = new Node(6);
+        head2.next.next.next.next.next = new Node(4);
+        head2.next.next.next.next.next.next = new Node(2);
+        head2.next.next.next.next.next.next.next = new Node(6);
+        head2.next.next.next.next.next.next.next.next = new Node(9);
+        head2.next.next.next.next.next.next.next.next.next = new Node(3);
+        head2.next.next.next.next.next.next.next.next.next.next = new Node(5);
+        head2.next.next.next.next.next.next.next.next.next.next.next = new Node(3);
+
+        Node result = findUnion(head1, head2);
+
+        while(result != null){
+            System.out.print(result.data);
+            result = result.next;
+        }
         
-        // Create an instance of the Solution class
-        Solution solution = new Solution();
-        
-        // Call the maxPathSum method and get the result
-        int result = solution.maxPathSum(arr1, arr2);
-        
-        // Print the result
-        System.out.println("The maximum path sum is: " + result);
     }
 }
