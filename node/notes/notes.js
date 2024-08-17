@@ -1,6 +1,10 @@
 // 1.  Is Node.js single-threaded?
 // Yes, Node.js is single-threaded by default. However, it utilizes event-driven architecture and non-blocking I/O operations to handle multiple concurrent requests efficiently, enabling scalability and high performance in applications.
 
+
+// I/O operations
+// In Node.js, I/O operations refer to any input or output tasks that involve interacting with external resources. These operations are crucial for building applications that read from or write to files, databases, networks, or other external systems
+
 // 2. There are two types of API functions supported by Node.js:
 
 // Synchronous: These API functions are used for blocking code.
@@ -12,8 +16,6 @@
 // 4. What is middleware?
 // Middleware is the function that works between the request and the response cycle. Middleware gets executed after the server receives the request and before the controller sends the response.
 
-// 5. How does Node.js handle concurrency even after being single-threaded?
-// Node.js handles concurrency by using asynchronous, non-blocking operations. Instead of waiting for one task to complete before starting the next, it can initiate multiple tasks and continue processing while waiting for them to finish, all within a single thread.
 
 // 6. What is control flow in Node.js?
 // Control flow in Node.js refers to the sequence in which statements and functions are executed. It manages the order of execution, handling asynchronous operations, callbacks, and error handling to ensure smooth program flow.
@@ -44,13 +46,11 @@
 // package.json in Node.js is a metadata file that contains project-specific information such as dependencies, scripts, version, author details, and other configuration settings required for managing and building the project.
 
 // 13. What is event-driven programming in Node.js?
-// Event-driven programming is used to synchronize the occurrence of multiple events and to make the program as simple as possible. The basic components of an Event-Driven Program are:
+// Event-driven programming is a paradigm in which the flow of a program is determined by events. In Node.js, the event-driven model allows developers to write non-blocking, asynchronous code that responds to events as they occur, without waiting for blocking operations to complete
+//. The basic components of an Event-Driven Program are:
 // A callback function ( called an event handler) is called when an event is triggered.
 // An event loop that listens for event triggers and calls the corresponding event handler for that event.
 
-
-// Understanding Event-Driven Programming
-// Event-driven programming is a paradigm in which the flow of a program is determined by events such as user actions, system notifications, or data availability. In Node.js, the event-driven model allows developers to write non-blocking, asynchronous code that responds to events as they occur, without waiting for blocking operations to complete.
 
 // Events and Event Emitters
 // Events: Events are signals indicating that a particular action or state change has occurred. In Node.js, events are represented by strings (event names) and associated data (event payloads).
@@ -71,6 +71,11 @@
         eventEmitter.emit('start', 1, 100);
           
 
+
+// 5. How does Node.js handle concurrency even after being single-threaded?
+// Node.js handles concurrency by using asynchronous, non-blocking operations. Instead of waiting for one task to complete before starting the next, it can initiate multiple tasks and continue processing while waiting for them to finish, all within a single thread.
+
+
 // 14. What is buffer in Node.js?
 // The Buffer class in Node.js is used to perform operations on raw binary data. Generally, Buffer refers to the particular memory location in memory. Buffer and array have some similarities, but the difference is array can be any type, and it can be resizable. Buffers only deal with binary data, and it can not be resizable. Each integer in a buffer represents a byte. console.log() function is used to print the Buffer instance.  
 
@@ -78,12 +83,10 @@
 // Streams are a type of data-handling method and are used to read or write input into output sequentially. Streams are used to handle reading/writing files or exchanging information in an efficient way. The stream module provides an API for implementing the stream interface. Examples of the stream object in Node.js can be a request to an HTTP server and process.stdout are both stream instances.
 
 // Types of Stream:
-
 // Readable stream: It is the stream from where you can receive and read the data in an ordered fashion. However, you are not allowed to send anything. For example, fs.createReadStream() lets us read the contents of a file.
 // Writable stream: It is the stream where you can send data in an ordered fashion but you are not allowed to receive it back. For example, fs.createWriteStream() lets us write data to a file.
 // Duplex stream: It is the stream that is both readable and writable. Thus you can send in and receive data together. For example, net.Socket is a TCP socket.
 // Transform stream: It is the stream that is used to modify the data or transform it as it is read. The transform stream is basically a duplex in nature. For example, zlib.createGzip stream is used to compress the data using gzip.
-
 
 // 16. Explain crypto module in Node.js
 // The crypto module is used for encrypting, decrypting, or hashing any type of data. This encryption and decryption basically help to secure and add a layer of authentication to the data. The main use case of the crypto module is to convert the plain readable text to an encrypted format and decrypt it when required.
@@ -93,7 +96,6 @@
 
 // Explain DNS module in Node.js
 // DNS is a node module used to do name resolution facility which is provided by the operating system as well as used to do an actual DNS lookup. Its main advantage is that there is no need for memorizing IP addresses – DNS servers provide a nifty solution for converting domain or subdomain names to IP addresses.
-
 
 // 17. What is callback hell?
 // Callback hell is an issue caused due to a nested callback. This causes the code to look like a pyramid and makes it unable to read To overcome this situation we use promises.
@@ -108,16 +110,19 @@
 
 // How to handle environment variables in Node.js?
 // We use process.env to handle environment variables in Node.js. We can specify environment configurations as well as keys in the .env file. To access the variable in the application, we use the “process.env.VARIABLE_NAME” syntax. To use it we have to install the dotenv package using the below command:
-
 // npm install dotenv
-
 
 // What is web socket?
 // Web Socket is a protocol that provides full-duplex (multiway) communication i.e. allows communication in both directions simultaneously. It is a modern web technology in which there is a continuous connection between the user’s browser (client) and the server. In this type of communication, between the web server and the web browser, both of them can send messages to each other at any point in time. Traditionally on the web, we had a request/response format where a user sends an HTTP request and the server responds to that. This is still applicable in most cases, especially those using RESTful API. But a need was felt for the server to also communicate with the client, without getting polled(or requested) by the client. The server in itself should be able to send information to the client or the browser. This is where Web Socket comes into the picture.
 
 
 //  What is a cluster in Node.js?
-// Due to a single thread in node.js, it handles memory more efficiently because there are no multiple threads due to which no thread management is needed. Now, to handle workload efficiently and to take advantage of computer multi-core systems, cluster modules are created that provide us the way to make child processes that run simultaneously with a single parent process.
+
+// Node.js clusters are a built-in feature of Node.js that allows applications to spawn multiple instances of the Node.js process, each running on a separate core of the CPU. Clusters enable horizontal scaling of Node.js applications to take advantage of multi-core systems.
+
+// to handle workload efficiently and to take advantage of computer multi-core systems, cluster modules are created that provide us the way to make child processes that run simultaneously with a single parent process.
+
+// Unlike a load balancer, which can balance traffic across multiple servers running different applications, Node.js clusters are limited to distributing traffic among instances of the same Node.js application running on the same server.
 
 // Explain some of the cluster methods in Node.js
 // Fork(): It creates a new child process from the master. The isMaster returns true if the current process is master or else false.

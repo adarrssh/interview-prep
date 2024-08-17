@@ -1,3 +1,10 @@
+// in JavaScript, objects have a special hidden property [[Prototype]] (as named in the specification), 
+//that is either null or references another object. That object is called “a prototype”:
+// When we read a property from object, and it’s missing, JavaScript automatically takes it from the prototype. 
+//In programming, this is called “prototypal inheritance”. And soon we’ll study many examples of such inheritance,
+// as well as cooler language features built upon it.
+// The property [[Prototype]] is internal and hidden, but there are many ways to set it.
+
 function createUser(username,score){
     // in this code, this refers to the object that is being invoked
     this.username = username
@@ -10,6 +17,10 @@ createUser.prototype.increment = function(){
 createUser.prototype.printMe = function(){
     console.log(`score is ${this.score}`)
 }
+
+// The JavaScript prototype property allows you to add new properties to object constructors:
+
+
 
 // this won't be able to use increment and printMe method
 // const chai = createUser("chai",25)
@@ -39,17 +50,26 @@ const Teacher = {
 }
 
 const TeachingSupport = {
-    isAvailabale : false 
+    isAvailabale : true 
 }
 
 const TASupport = {
     makeAssignment: 'JS assignment',
     fullTime : true ,
+    isAvailabale: '3',
     __proto__ : TeachingSupport
 }
 
 // or 
-// Object.setPrototypeOf(TASupport,TeachingSupport)
+
+Object.setPrototypeOf(TASupport,TeachingSupport)
+
+console.log(TASupport.isAvailabale)
+
+// This
+ __proto__ 
+// sets all properties of the object set in its [[Prototype]] to the target object.
+
 
 // function constructor 
 

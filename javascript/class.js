@@ -59,3 +59,31 @@ class MyClass {
   // Accessing instance method
   obj.printValue(); // Output: 42
   
+
+
+
+/**
+
+  class D {
+      static stMeth() {
+          l("static method stMeth on D")
+      }
+      meth() {
+          l("method on D")
+      }
+      static staticProp = 78
+  }
+
+
+  function D() {}
+    D.prototype.meth = function () {
+            l("method on D")
+    }
+    D.stMEth = function() {
+            l("static method stMeth on D")    
+    }
+    D.staticProp = 78
+  }
+
+ *
+ */
