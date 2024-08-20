@@ -55,3 +55,7 @@ Memory usage: ArrayList may consume more memory than a regular array because it 
 // converts res to 2d array
 List<int[]> res = new ArrayList<>();
 res.toArray(new int[res.size()][]);
+
+int[] arr = result.stream().mapToInt(Integer::intValue).toArray();
+
+return arr;

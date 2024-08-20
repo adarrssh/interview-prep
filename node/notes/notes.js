@@ -214,3 +214,11 @@
     });
 
     child.send({ hello: 'world' });
+
+
+// Differentiate between process.nextTick() and setImmediate()?
+// The distinction between method and product. This is accomplished through the use of nextTick() and setImmediate(). next Tick() postpones the execution of action until the next pass around the event loop, or it simply calls the callback function once the event loop's current execution is complete, whereas setImmediate() executes a callback on the next cycle of the event loop and returns control to the event loop for any I/O operations.
+
+
+// What is piping in Node.js?
+// Piping is a mechanism used to connect the output of one stream to another stream. It is normally used to retrieve data from one stream and pass output to another stream

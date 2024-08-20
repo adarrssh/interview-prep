@@ -7,6 +7,10 @@ element(): Retrieves, but does not remove, the head of the queue. Throws an exce
 peek(): Retrieves, but does not remove, the head of the queue, or returns null if the queue is empty.
 
 
+Deque<Integer> q = new ArrayDeque<>();
+q.poll();
+q.peekLast()
+q.pollLast()
 
 PriorityQueue<Integer> pq = new PriorityQueue<>();
 add(E e) / offer(E e): Adds the specified element to the queue.
